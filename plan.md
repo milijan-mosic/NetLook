@@ -2,6 +2,7 @@
 
   [x] - Fetches data about CPU, RAM, SSD and network usage from device that's installed on
   [x] - Sends data every second to server via HTTP
+  [] - Agent should try to send the data every second, even if the first time connection is closed
 
   [] - Sends data every X seconds to server via websocket
   [] - Can be installed via Docker and AUR, or build it manually
