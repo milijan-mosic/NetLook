@@ -19,6 +19,6 @@ func Test(w http.ResponseWriter, r *http.Request) {
 	}
 
 	for _, table := range tables {
-		log.Println("Table Name:", table.Name)
+		log.Println("Table Name: ", table.Name)
 	}
 }
