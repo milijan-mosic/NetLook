@@ -15,6 +15,7 @@ func main() {
 	database.SeedDatabase(db)
 	database.CloseDBConnection(db, false)
 
+	http.HandleFunc("/", controllers.ServeClient)
 	http.HandleFunc("/receive", controllers.ReceiveMetrics)
 	http.HandleFunc("/test", controllers.Test)
 	log.Fatal(http.ListenAndServe(":11000", nil))

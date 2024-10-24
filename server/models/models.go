@@ -50,6 +50,17 @@ type SSD struct {
 	Timestamp string `json:"timestamp"` // UNIX
 }
 
+type AgentData struct {
+	AgentName string `json:"agent_name"`
+	CPUs      []CPU  `json:"cpus"`
+	RAM       []RAM  `json:"ram"`
+	SSD       []SSD  `json:"ssd"`
+}
+
+type ClientPackage struct {
+	Agents []AgentData `json:"agents"`
+}
+
 var AllModels = []interface{}{
 	&Agent{},
 	&CPU{},
