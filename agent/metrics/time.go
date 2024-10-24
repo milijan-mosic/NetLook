@@ -3,8 +3,8 @@ package metrics
 import (
 	"time"
 
-	models "github.com/milijan-mosic/net-look/client/models"
-	utils "github.com/milijan-mosic/net-look/client/utils"
+	models "github.com/milijan-mosic/net-look/agent/models"
+	utils "github.com/milijan-mosic/net-look/agent/utils"
 )
 
 func GetTimeData() models.TimeStamp {

@@ -7,7 +7,7 @@ import (
 	"log"
 	"net/http"
 
-	models "github.com/milijan-mosic/net-look/client/models"
+	models "github.com/milijan-mosic/net-look/agent/models"
 )
 
 func PackJson(data models.Package) []byte {
@@ -30,8 +30,8 @@ func Emit(jsonData []byte, target string, debug bool) {
 
 	req.Header.Set("Content-Type", "application/json")
 
-	client := &http.Client{}
-	resp, err := client.Do(req)
+	postman := &http.Client{}
+	resp, err := postman.Do(req)
 	if err != nil {
 		log.Printf("Error sending request: %v", err)
 		return

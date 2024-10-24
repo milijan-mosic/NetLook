@@ -3,8 +3,8 @@ package metrics
 import (
 	disk "github.com/shirou/gopsutil/disk"
 
-	models "github.com/milijan-mosic/net-look/client/models"
-	utils "github.com/milijan-mosic/net-look/client/utils"
+	models "github.com/milijan-mosic/net-look/agent/models"
+	utils "github.com/milijan-mosic/net-look/agent/utils"
 )
 
 func GetSSDUsage() models.SSD {

@@ -1,4 +1,4 @@
-module github.com/milijan-mosic/net-look/client
+module github.com/milijan-mosic/net-look/agent
 
 go 1.23.2
 

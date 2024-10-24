@@ -3,8 +3,8 @@ package metrics
 import (
 	mem "github.com/shirou/gopsutil/mem"
 
-	models "github.com/milijan-mosic/net-look/client/models"
-	utils "github.com/milijan-mosic/net-look/client/utils"
+	models "github.com/milijan-mosic/net-look/agent/models"
+	utils "github.com/milijan-mosic/net-look/agent/utils"
 )
 
 func GetRAMUsage() models.RAM {

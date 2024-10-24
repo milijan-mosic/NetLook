@@ -3,8 +3,8 @@ package metrics
 import (
 	cpu "github.com/shirou/gopsutil/cpu"
 
-	models "github.com/milijan-mosic/net-look/client/models"
-	utils "github.com/milijan-mosic/net-look/client/utils"
+	models "github.com/milijan-mosic/net-look/agent/models"
+	utils "github.com/milijan-mosic/net-look/agent/utils"
 )
 
 func GetCPUsUsage() []models.CPU {
