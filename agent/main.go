@@ -4,14 +4,12 @@ import (
 	"fmt"
 	"time"
 
+	emitter "github.com/milijan-mosic/net-look/agent/emitter"
 	clock "github.com/milijan-mosic/net-look/agent/metrics"
 	cpu "github.com/milijan-mosic/net-look/agent/metrics"
 	ram "github.com/milijan-mosic/net-look/agent/metrics"
 	ssd "github.com/milijan-mosic/net-look/agent/metrics"
-
 	models "github.com/milijan-mosic/net-look/agent/models"
-
-	emitter "github.com/milijan-mosic/net-look/agent/emitter"
 )
 
 var tick = 1 * time.Second
