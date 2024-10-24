@@ -18,6 +18,12 @@ func Test(w http.ResponseWriter, r *http.Request) {
 		log.Fatal("Failed to fetch table names: ", err)
 	}
 
+	if err := database.CloseDB(db); err != nil {
+		log.Fatalf("Error closing the database connection: %v", err)
+	} else {
+		log.Println("Database connection closed successfully!")
+	}
+
 	for _, table := range tables {
 		log.Println("Table Name: ", table.Name)
 	}

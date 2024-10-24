@@ -79,4 +79,10 @@ func ReceiveMetrics(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Failed to create model", http.StatusInternalServerError)
 		return
 	}
+
+	if err := database.CloseDB(db); err != nil {
+		log.Fatalf("Error closing the database connection: %v", err)
+	} else {
+		log.Println("Database connection closed successfully!")
+	}
 }

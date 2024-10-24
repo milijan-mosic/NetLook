@@ -31,6 +31,14 @@ func OpenDB(url string) *gorm.DB {
 	return db
 }
 
+func CloseDB(db *gorm.DB) error {
+	dbConnection, err := db.DB()
+	if err != nil {
+		return err
+	}
+	return dbConnection.Close()
+}
+
 func MigrateModels(db *gorm.DB, models []interface{}) error {
 	for _, model := range models {
 		if err := db.AutoMigrate(model); err != nil {
