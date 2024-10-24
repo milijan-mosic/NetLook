@@ -24,7 +24,8 @@ func Emit(jsonData []byte, target string, debug bool) {
 
 	req, err := http.NewRequest("POST", target, bytes.NewBuffer(jsonData))
 	if err != nil {
-		log.Fatalf("Error creating request: %v", err)
+		log.Printf("Error creating request: %v", err)
+		return
 	}
 
 	req.Header.Set("Content-Type", "application/json")
@@ -32,7 +33,8 @@ func Emit(jsonData []byte, target string, debug bool) {
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
-		log.Fatalf("Error sending request: %v", err)
+		log.Printf("Error sending request: %v", err)
+		return
 	}
 	defer resp.Body.Close()
 

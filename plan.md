@@ -4,7 +4,7 @@
   [x] - Sends data every second to server via HTTP
 
   [] - Sends data to server via websocket
-  [] - Agent should try to send the data even if the connection is closed or server is down
+  [x] - Agent should try to send the data even if the connection is closed or server is down
 
   - Later
 
