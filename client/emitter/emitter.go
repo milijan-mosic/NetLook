@@ -20,6 +20,8 @@ func PackJson(data models.Package) []byte {
 }
 
 func Emit(jsonData []byte, target string, debug bool) {
+	log.Println("Sending...")
+
 	req, err := http.NewRequest("POST", target, bytes.NewBuffer(jsonData))
 	if err != nil {
 		log.Fatalf("Error creating request: %v", err)
