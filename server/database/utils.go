@@ -43,22 +43,58 @@ func MigrateModels(db *gorm.DB, models []interface{}) error {
 	return nil
 }
 
-func SeedDatabase(db *gorm.DB, debug bool) {
+func CreateModel[T any](db *gorm.DB, model T, debug bool) error {
+	result := db.Create(&model)
+	if result.Error != nil {
+		log.Println("Error inserting model: ", result.Error)
+		return result.Error
+	}
+
+	if debug {
+		log.Println("Inserted model: ", model)
+	}
+	return nil
+}
+
+func CreateModels[T any](db *gorm.DB, models []T, debug bool) error {
+	tx := db.Begin()
+	defer func() {
+		if r := recover(); r != nil {
+			tx.Rollback()
+		}
+	}()
+
+	if err := tx.Create(&models).Error; err != nil {
+		tx.Rollback()
+		log.Println("Error inserting models: ", err)
+		return err
+	}
+
+	tx.Commit()
+	if debug {
+		log.Println("Inserted models: ", models)
+	}
+	return nil
+}
+
+func FindRootAgent(db *gorm.DB) []models.Agent {
 	var allAgents []models.Agent
 	if err := db.Where("name = ?", "Test").Find(&allAgents).Error; err != nil {
-		log.Fatal("Failed to query agents by name: ", err)
+		log.Println("Failed to query agents by name: ", err)
 	}
 
 	if len(allAgents) > 0 {
-		log.Println("Agent already exists:", allAgents)
-		return
+		log.Println("Agent already exists: ", allAgents)
 	}
+	return allAgents
+}
 
-	agent := models.Agent{Name: "Test", UpdateInterval: 1.00}
-	if result := db.Create(&agent); result.Error != nil {
-		log.Println("Error inserting agent:", result.Error)
-	} else {
-		log.Println("Inserted test agent:", agent)
+func SeedDatabase(db *gorm.DB) {
+	allAgents := FindRootAgent(db)
+
+	if len(allAgents) == 0 {
+		agent := models.Agent{Name: "Test", UpdateInterval: 1.00}
+		CreateModel(db, &agent, false)
 	}
 }
 
