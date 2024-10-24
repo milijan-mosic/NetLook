@@ -9,10 +9,10 @@ cd server/
 air server --port 11000
 ```
 
-### Client
+### Agent
 
 ```sh
-cd client/
+cd agent/
 go mod download
 go install github.com/air-verse/air@latest
 go mod tidy

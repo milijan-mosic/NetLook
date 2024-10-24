@@ -26,10 +26,11 @@ func main() {
 		timeData := clock.GetTimeData()
 
 		data := models.Package{
-			Cpu:  cpuUsage,
-			Ram:  ramUsage,
-			Ssd:  diskUsage,
-			Time: timeData,
+			AgentName: "Test",
+			Cpu:       cpuUsage,
+			Ram:       ramUsage,
+			Ssd:       diskUsage,
+			Time:      timeData,
 		}
 		// fmt.Println(data) // DEBUG
 

@@ -1,4 +1,4 @@
-- Client
+- Agent
 
   [x] - Fetches data about CPU, RAM, SSD and network usage from device that's installed on
   [x] - Sends data every second to server via HTTP

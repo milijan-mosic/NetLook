@@ -39,6 +39,6 @@ func Emit(jsonData []byte, target string, debug bool) {
 	defer resp.Body.Close()
 
 	if debug {
-		fmt.Println("Package status:", resp.Status)
+		fmt.Println("Package status: ", resp.Status)
 	}
 }

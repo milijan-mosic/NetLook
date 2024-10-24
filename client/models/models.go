@@ -23,8 +23,9 @@ type TimeStamp struct {
 }
 
 type Package struct {
-	Time TimeStamp `json:"time"`
-	Cpu  []CPU     `json:"cpu"`
-	Ram  RAM       `json:"ram"`
-	Ssd  SSD       `json:"ssd"`
+	AgentName string    `json:"agent_name"`
+	Time      TimeStamp `json:"time"`
+	Cpu       []CPU     `json:"cpu"`
+	Ram       RAM       `json:"ram"`
+	Ssd       SSD       `json:"ssd"`
 }
