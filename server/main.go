@@ -13,6 +13,9 @@ func main() {
 	db := database.OpenDB("./server.db")
 	database.MigrateModels(db, models.AllModels)
 
+	debug := true // FIXME
+	database.SeedDatabase(db, debug)
+
 	http.HandleFunc("/receive", controllers.ReceiveMetrics)
 	http.HandleFunc("/test", controllers.Test)
 	log.Fatal(http.ListenAndServe(":11000", nil))

@@ -1,15 +1,28 @@
 package models
 
-import database "github.com/milijan-mosic/net-look/server/database"
+import (
+	"gorm.io/gorm"
+
+	"github.com/google/uuid"
+)
+
+type ID struct {
+	ID string `gorm:"type:uuid;primaryKey" json:"id"`
+}
+
+func (base *ID) BeforeCreate(tx *gorm.DB) (err error) {
+	base.ID = uuid.New().String()
+	return
+}
 
 type Agent struct {
-	database.ID
+	ID
 	Name           string  `json:"name"`
 	UpdateInterval float64 `json:"update_interval"`
 }
 
 type CPU struct {
-	database.ID
+	ID
 	AgentId   string `gorm:"foreignKey:AgentId" json:"agent_id"`
 	Number    string `json:"number"`    // index
 	Usage     string `json:"usage"`     // percentage
@@ -18,7 +31,7 @@ type CPU struct {
 }
 
 type RAM struct {
-	database.ID
+	ID
 	AgentId   string `gorm:"foreignKey:AgentId" json:"agent_id"`
 	Total     string `json:"total"`     // GB
 	Used      string `json:"used"`      // GB
@@ -28,7 +41,7 @@ type RAM struct {
 }
 
 type SSD struct {
-	database.ID
+	ID
 	AgentId   string `gorm:"foreignKey:AgentId" json:"agent_id"`
 	Total     string `json:"total"`     // GB
 	Used      string `json:"used"`      // GB

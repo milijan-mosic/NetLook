@@ -7,16 +7,9 @@ import (
 	"github.com/google/uuid"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
+
+	models "github.com/milijan-mosic/net-look/server/models"
 )
-
-type ID struct {
-	ID string `gorm:"type:uuid;primaryKey" json:"id"`
-}
-
-func (base *ID) BeforeCreate(tx *gorm.DB) (err error) {
-	base.ID = uuid.New().String()
-	return
-}
 
 func BeforeCreate(model interface{}, tx *gorm.DB) (err error) {
 	val := reflect.ValueOf(model).Elem()
@@ -50,18 +43,24 @@ func MigrateModels(db *gorm.DB, models []interface{}) error {
 	return nil
 }
 
-// // 3. Create a new record
-// user := User{Name: "Alice", Age: 25}
-// result := db.Create(&user) // Pass pointer of data to create
-// if result.Error != nil {
-// 	fmt.Println(result.Error)
-// }
-// fmt.Println("Inserted User ID:", user.ID)
+func SeedDatabase(db *gorm.DB, debug bool) {
+	var allAgents []models.Agent
+	if err := db.Where("name = ?", "Test").Find(&allAgents).Error; err != nil {
+		log.Fatal("Failed to query agents by name: ", err)
+	}
 
-// // 4. Query a user
-// var queriedUser User
-// db.First(&queriedUser, 1) // Find the user with primary key 1
-// fmt.Printf("Queried User: %+v\n", queriedUser)
+	if len(allAgents) > 0 {
+		log.Println("Agent already exists:", allAgents)
+		return
+	}
+
+	agent := models.Agent{Name: "Test", UpdateInterval: 1.00}
+	if result := db.Create(&agent); result.Error != nil {
+		log.Println("Error inserting agent:", result.Error)
+	} else {
+		log.Println("Inserted test agent:", agent)
+	}
+}
 
 // // 5. Update the user's age
 // db.Model(&queriedUser).Update("Age", 30)
