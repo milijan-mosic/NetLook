@@ -8,7 +8,7 @@ import (
 )
 
 func Test(w http.ResponseWriter, r *http.Request) {
-	db := database.OpenDB("./server.db")
+	db := database.OpenDBConnection("./server.db")
 
 	var tables []struct {
 		Name string `gorm:"column:name"`
@@ -18,11 +18,7 @@ func Test(w http.ResponseWriter, r *http.Request) {
 		log.Fatal("Failed to fetch table names: ", err)
 	}
 
-	if err := database.CloseDB(db); err != nil {
-		log.Fatalf("Error closing the database connection: %v", err)
-	} else {
-		log.Println("Database connection closed successfully!")
-	}
+	database.CloseDBConnection(db, false)
 
 	for _, table := range tables {
 		log.Println("Table Name: ", table.Name)

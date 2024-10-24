@@ -10,15 +10,10 @@ import (
 )
 
 func main() {
-	db := database.OpenDB("./server.db")
+	db := database.OpenDBConnection("./server.db")
 	database.MigrateModels(db, models.AllModels)
 	database.SeedDatabase(db)
-
-	if err := database.CloseDB(db); err != nil {
-		log.Fatalf("Error closing the database connection: %v", err)
-	} else {
-		log.Println("Database connection closed successfully!")
-	}
+	database.CloseDBConnection(db, false)
 
 	http.HandleFunc("/receive", controllers.ReceiveMetrics)
 	http.HandleFunc("/test", controllers.Test)

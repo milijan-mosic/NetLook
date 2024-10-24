@@ -24,7 +24,7 @@ func ReceiveMetrics(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	db := database.OpenDB("./server.db")
+	db := database.OpenDBConnection("./server.db")
 	allAgents := database.FindRootAgent(db)
 	if len(allAgents) == 0 {
 		http.Error(w, "No agents found", http.StatusInternalServerError)
@@ -80,9 +80,5 @@ func ReceiveMetrics(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err := database.CloseDB(db); err != nil {
-		log.Fatalf("Error closing the database connection: %v", err)
-	} else {
-		log.Println("Database connection closed successfully!")
-	}
+	database.CloseDBConnection(db, false)
 }

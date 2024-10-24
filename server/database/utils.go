@@ -21,7 +21,7 @@ func BeforeCreate(model interface{}, tx *gorm.DB) (err error) {
 	return nil
 }
 
-func OpenDB(url string) *gorm.DB {
+func OpenDBConnection(url string) *gorm.DB {
 	db, err := gorm.Open(sqlite.Open(url))
 	if err != nil {
 		log.Fatal("Failed to connect database!")
@@ -31,12 +31,22 @@ func OpenDB(url string) *gorm.DB {
 	return db
 }
 
-func CloseDB(db *gorm.DB) error {
+func closeDB(db *gorm.DB) error {
 	dbConnection, err := db.DB()
 	if err != nil {
 		return err
 	}
 	return dbConnection.Close()
+}
+
+func CloseDBConnection(db *gorm.DB, debug bool) {
+	if err := closeDB(db); err != nil {
+		log.Fatalf("Error closing the database connection: %v", err)
+	}
+
+	if debug {
+		log.Println("Database connection closed successfully!")
+	}
 }
 
 func MigrateModels(db *gorm.DB, models []interface{}) error {
