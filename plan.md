@@ -3,9 +3,8 @@
 [x] - Fetches data about CPU, RAM, SSD and network usage from device that's installed on
 [x] - Sends data every second to server via HTTP
 [x] - Agent should try to send the data even if the connection is closed or server is down
-
 [] - Has configurable settings
-[] - Can update settings via CLI flags
+[] - Can update settings via CLI flags or env file
 
 ## Later
 
@@ -18,11 +17,17 @@
 
 [x] - Fetches data from agents via HTTP
 [x] - Stores data into the database, when received
+[x] - Has a route for serving client with data
+[] - Has configurable settings
+[] - Can update settings via CLI flags or env file
 
 # Client
 
-[] - Takes the data from backend using SolidJS via HTTP
+[x] - Takes the data from backend using SolidJS via HTTP
 [] - Displays the data using D3.js -> donuts, columns, and time series (one big div per agent)
+[] - Has configurable settings
+[] - Can update settings via env file
+[] - All three are dockerized for local development
 
 ## Later
 
