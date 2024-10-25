@@ -6,6 +6,7 @@ import (
 
 	controllers "github.com/milijan-mosic/net-look/server/controllers"
 	database "github.com/milijan-mosic/net-look/server/database"
+	middlewares "github.com/milijan-mosic/net-look/server/middlewares"
 	models "github.com/milijan-mosic/net-look/server/models"
 )
 
@@ -18,5 +19,5 @@ func main() {
 	http.HandleFunc("/", controllers.ServeClient)
 	http.HandleFunc("/receive", controllers.ReceiveMetrics)
 	http.HandleFunc("/test", controllers.Test)
-	log.Fatal(http.ListenAndServe(":11000", nil))
+	log.Fatal(http.ListenAndServe(":11000", middlewares.EnableCORS(http.DefaultServeMux)))
 }
