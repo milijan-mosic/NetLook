@@ -1,6 +1,8 @@
 - SolidJS
 - TypeScript
 - TailwindCSS
+- ChartsJS
+- Axios
 
 - Go
 - InfluxDB
