@@ -115,11 +115,3 @@ func SeedDatabase(db *gorm.DB) {
 		CreateModel(db, &agent, false)
 	}
 }
-
-// // 5. Update the user's age
-// db.Model(&queriedUser).Update("Age", 30)
-// fmt.Println("Updated user's age")
-
-// // 6. Delete the user
-// db.Delete(&queriedUser)
-// fmt.Println("Deleted user")
