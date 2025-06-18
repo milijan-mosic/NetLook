@@ -1,0 +1,69 @@
+services:
+  caddy:
+    image: caddy:2.9.1-alpine
+    container_name: netlook_caddy
+    restart: always
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./caddy/local.Caddyfile:/etc/caddy/Caddyfile
+    networks:
+      - netlook
+
+  netlook_server:
+    image: netlook_server:latest
+    container_name: netlook_server
+    restart: unless-stopped
+    depends_on:
+      - caddy
+    ports:
+      - 11000:11000
+    build:
+      context: ./server
+      dockerfile: images/local.Dockerfile
+    volumes:
+      - ./server:/app
+    networks:
+      - netlook
+
+  netlook_agent:
+    image: netlook_agent:latest
+    container_name: netlook_agent
+    restart: unless-stopped
+    depends_on:
+      - caddy
+      - netlook_server
+    build:
+      context: ./agent
+      dockerfile: images/local.Dockerfile
+    volumes:
+      - ./agent:/app
+    networks:
+      - netlook
+
+  grafana:
+    image: grafana/grafana:11.5.0-ubuntu
+    container_name: netlook_grafana
+    restart: unless-stopped
+    depends_on:
+      - caddy
+      - netlook_server
+    ports:
+      - 9000:3000
+    volumes:
+      - ./grafana_data:/var/lib/grafana
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    networks:
+      - netlook
+
+volumes:
+  caddy:
+  grafana_data:
+  server:
+  agent:
+
+networks:
+  netlook:
