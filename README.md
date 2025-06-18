@@ -2,6 +2,10 @@
 
 ## Dev setup
 
+```sh
+docker-compose -f docker-compose.local.yaml up --build --remove-orphans'
+```
+
 ### Server
 
 ```sh
@@ -13,8 +17,5 @@ air server --port 11000
 
 ```sh
 cd agent/
-go mod download
-go install github.com/air-verse/air@latest
-go mod tidy
 air server --port 10000
 ```
