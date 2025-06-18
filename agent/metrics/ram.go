@@ -15,12 +15,6 @@ func GetRAMUsage() models.RAM {
 		Used:  utils.FloatToString(float64(vMem.Used) / utils.BytesToGigabytes()),
 		Usage: utils.FloatToString(vMem.UsedPercent),
 	}
-	// DEBUG
-	// fmt.Printf("RAM Usage -> %.2f%%, Total -> %.2f GB, Used -> %.2f GB\n",
-	// 	vMem.UsedPercent,
-	// 	float64(vMem.Total)/(1024*1024*1024),
-	// 	float64(vMem.Used)/(1024*1024*1024),
-	// )
 
 	return ramUsage
 }

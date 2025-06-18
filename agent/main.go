@@ -30,10 +30,9 @@ func main() {
 			Ssd:       diskUsage,
 			Time:      timeData,
 		}
-		// fmt.Println(data) // DEBUG
 
 		packagedData := emitter.PackJson(data)
-		emitter.Emit(packagedData, "http://localhost:11000/receive", false)
+		emitter.Emit(packagedData, "http://netlook_server:11000/receive", false)
 
 		time.Sleep(tick)
 	}

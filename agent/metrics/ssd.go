@@ -15,11 +15,6 @@ func GetSSDUsage() models.SSD {
 		Used:  utils.FloatToString(float64(diskStat.Total) / utils.BytesToGigabytes()),
 		Usage: utils.FloatToString(float64(diskStat.Used) / utils.BytesToGigabytes()),
 	}
-	// DEBUG
-	// fmt.Printf("SSD Usage -> %.2f%%, Total -> %.2f GB, Used -> %.2f GB\n",
-	// 	diskStat.UsedPercent,
-	// 	float64(diskStat.Total)/(1024*1024*1024),
-	// 	float64(diskStat.Used)/(1024*1024*1024))
 
 	return diskUsage
 }

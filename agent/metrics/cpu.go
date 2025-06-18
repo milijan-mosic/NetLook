@@ -17,9 +17,6 @@ func GetCPUsUsage() []models.CPU {
 			Usage:  utils.FloatToString(percent),
 		}
 		cpuReport = append(cpuReport, item)
-
-		// DEBUG
-		// fmt.Printf("CPU Core %d Usage -> %.2f%%\n", i, percent)
 	}
 
 	return cpuReport
