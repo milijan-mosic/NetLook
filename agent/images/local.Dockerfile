@@ -1,18 +1,25 @@
-FROM golang:1.23-alpine AS builder
+FROM golang:1.24.4-alpine AS builder
 
-WORKDIR /app
-COPY . .
-
+ENV CGO_ENABLED=1
 RUN apk add --no-cache gcc musl-dev sqlite-dev
 
+WORKDIR /app
+RUN go install github.com/air-verse/air@latest
+COPY go.mod go.sum ./
 RUN go mod download && go mod tidy
 
-FROM golang:1.23-alpine
+COPY . .
+# RUN CGO_ENABLED=0 GOOS=linux go build -o /app/main
+
+# ---------------------------------------------------------------- #
+
+FROM golang:1.24.4-alpine
 
 WORKDIR /app
+# COPY --from=builder /app/main .
+COPY --from=builder /go/bin/air /usr/local/bin/air
 COPY --from=builder /app .
-
-RUN go install github.com/air-verse/air@latest
+COPY air.toml ./
 
 EXPOSE 10000
-CMD air server --port 10000 -c .air.toml
+CMD ["air", "-c", "air.toml"]
