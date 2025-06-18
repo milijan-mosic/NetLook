@@ -1,0 +1,7 @@
+app.netlook.local {
+    tls internal
+
+    handle {
+        reverse_proxy grafana:3000
+    }
+}
