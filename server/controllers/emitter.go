@@ -11,8 +11,8 @@ import (
 )
 
 func ServeClient(w http.ResponseWriter, r *http.Request) {
-
 	db := database.OpenDBConnection("./server.db")
+
 	allAgents := database.FindRootAgent(db)
 	if len(allAgents) == 0 {
 		http.Error(w, "No agents found", http.StatusInternalServerError)

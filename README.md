@@ -1,4 +1,4 @@
-# Simple monitoring tool
+# NetLook
 
 ## Dev setup
 
@@ -6,7 +6,7 @@
 docker-compose -f docker-compose.local.yaml up --build --remove-orphans'
 ```
 
-### Server
+### Master
 
 ```sh
 cd server/

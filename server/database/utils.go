@@ -104,6 +104,7 @@ func FindRootAgent(db *gorm.DB) []models.Agent {
 	if len(allAgents) > 0 {
 		log.Println("Agent already exists: ", allAgents)
 	}
+
 	return allAgents
 }
 
