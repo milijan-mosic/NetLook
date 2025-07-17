@@ -18,4 +18,5 @@ func main() {
 	http.HandleFunc(url+"/test", controllers.Test)
 
 	log.Fatal(http.ListenAndServe(":10000", http.DefaultServeMux))
+	database.CloseDB()
 }

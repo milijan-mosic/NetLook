@@ -11,8 +11,7 @@ import (
 )
 
 func ServeClient(w http.ResponseWriter, r *http.Request) {
-	url := database.GetDBUrl()
-	db := database.OpenDBConnection(url)
+	db := database.GetDB()
 
 	allAgents := database.FindRootAgent(db)
 	if len(allAgents) == 0 {

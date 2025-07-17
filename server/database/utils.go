@@ -9,7 +9,9 @@ import (
 	"gorm.io/gorm"
 )
 
-func BeforeCreate(model interface{}, tx *gorm.DB) (err error) {
+var db *gorm.DB
+
+func BeforeCreate(model any, tx *gorm.DB) (err error) {
 	val := reflect.ValueOf(model).Elem()
 	idField := val.FieldByName("ID")
 
@@ -19,30 +21,35 @@ func BeforeCreate(model interface{}, tx *gorm.DB) (err error) {
 	return nil
 }
 
-func OpenDBConnection(url string) *gorm.DB {
-	db, err := gorm.Open(postgres.Open(url))
+func InitDB(url string) {
+	var err error
+	db, err = gorm.Open(postgres.Open(url))
 	if err != nil {
 		log.Fatal("Failed to connect database!")
 	}
 
-	log.Println("Database connection established!")
+	sqlDB, err := db.DB()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	sqlDB.SetMaxOpenConns(10)
+	sqlDB.SetMaxIdleConns(5)
+	sqlDB.SetConnMaxLifetime(0)
+
+	log.Println("DB initialized with connection pool")
+}
+
+func GetDB() *gorm.DB {
 	return db
 }
 
-func closeDB(db *gorm.DB) error {
-	dbConnection, err := db.DB()
+func CloseDB() {
+	sqlDB, err := db.DB()
 	if err != nil {
-		return err
+		log.Println("Failed to get sql.DB for closing:", err)
+		return
 	}
-	return dbConnection.Close()
-}
-
-func CloseDBConnection(db *gorm.DB, debug bool) {
-	if err := closeDB(db); err != nil {
-		log.Fatalf("Error closing the database connection: %v", err)
-	}
-
-	if debug {
-		log.Println("Database connection closed successfully!")
-	}
+	sqlDB.Close()
+	log.Println("DB connection closed")
 }

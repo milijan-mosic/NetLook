@@ -16,9 +16,7 @@ func GetDBUrl() string {
 
 func InitializeDatabase() {
 	url := GetDBUrl()
-
-	db := OpenDBConnection(url)
+	InitDB(url)
 	MigrateModels(db, models.AllModels)
 	SeedDatabase(db)
-	CloseDBConnection(db, false)
 }

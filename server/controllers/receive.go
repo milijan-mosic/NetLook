@@ -25,8 +25,7 @@ func ReceiveMetrics(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	url := database.GetDBUrl()
-	db := database.OpenDBConnection(url)
+	db := database.GetDB()
 	allAgents := database.FindRootAgent(db)
 	if len(allAgents) == 0 {
 		http.Error(w, "No agents found", http.StatusInternalServerError)
@@ -85,7 +84,6 @@ func ReceiveMetrics(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	database.CloseDBConnection(db, false)
 	log.Println("Received...")
 
 	response := map[string]string{"message": "Package received"}
