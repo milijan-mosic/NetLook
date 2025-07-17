@@ -1,6 +1,6 @@
 services:
-  caddy:
-    image: caddy:2.9.1-alpine
+  server:
+    image: caddy:2.10-alpine
     container_name: netlook_caddy
     restart: always
     ports:
@@ -11,12 +11,43 @@ services:
     networks:
       - netlook
 
-  netlook_server:
-    image: netlook_server:latest
-    container_name: netlook_server
-    restart: unless-stopped
+  database:
+    image: postgres:17.5
+    container_name: netlook_database
+    restart: on-failure
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - database:/var/lib/postgresql/data
+    depends_on:
+      - server
+    networks:
+      - netlook
+
+  db_admin:
+    image: dpage/pgadmin4
+    container_name: netlook_pgadmin
+    restart: on-failure
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+    depends_on:
+      - server
+      - database
+    networks:
+      - netlook
+
+  master:
+    image: netlook_master:latest
+    container_name: netlook_master
+    restart: on-failure
     depends_on:
       - caddy
+      - database
     ports:
       - 11000:11000
     build:
@@ -27,13 +58,14 @@ services:
     networks:
       - netlook
 
-  netlook_agent:
+  agent:
     image: netlook_agent:latest
     container_name: netlook_agent
-    restart: unless-stopped
+    restart: on-failure
     depends_on:
       - caddy
-      - netlook_server
+      - master
+      - database
     build:
       context: ./agent
       dockerfile: images/local.Dockerfile
@@ -42,10 +74,25 @@ services:
     networks:
       - netlook
 
+  frontend:
+    image: netlook_frontend:latest
+    container_name: netlook_frontend
+    restart: on-failure
+    build:
+      context: ./frontend
+      dockerfile: images/local.Dockerfile
+    volumes:
+      - ./frontend:/app
+    depends_on:
+      - caddy
+      - master
+      - database
+    networks:
+      - netlook
+
 volumes:
-  caddy:
-  server:
-  agent:
+  database:
+  pgadmin:
 
 networks:
   netlook:
