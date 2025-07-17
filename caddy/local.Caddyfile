@@ -1,16 +1,16 @@
-netlook.local {
+app.netlook.local {
     tls internal
 
     handle /api/* {
-        reverse_proxy master:11000
+        reverse_proxy master:10000
     }
 
     handle {
-        reverse_proxy www:3000
+        reverse_proxy frontend:3000
     }
 }
 
-pgadmin.netlook.local {
+db-admin.netlook.local {
     tls internal
 
     handle {

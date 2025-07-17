@@ -32,7 +32,7 @@ func main() {
 		}
 
 		packagedData := emitter.PackJson(data)
-		emitter.Emit(packagedData, "http://netlook_server:11000/receive", false)
+		emitter.Emit(packagedData, "http://master:10000/receive", false)
 
 		time.Sleep(tick)
 	}

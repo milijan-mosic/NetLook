@@ -24,5 +24,5 @@ COPY --from=builder /go/bin/air /usr/local/bin/air
 COPY --from=builder /app .
 COPY air.toml ./
 
-EXPOSE 11000
+EXPOSE 10000
 CMD ["air", "-c", "air.toml"]

@@ -46,10 +46,10 @@ services:
     container_name: netlook_master
     restart: on-failure
     depends_on:
-      - caddy
+      - server
       - database
     ports:
-      - 11000:11000
+      - 10000:10000
     build:
       context: ./server
       dockerfile: images/local.Dockerfile
@@ -63,9 +63,11 @@ services:
     container_name: netlook_agent
     restart: on-failure
     depends_on:
-      - caddy
+      - server
       - master
       - database
+    ports:
+      - 20000:20000
     build:
       context: ./agent
       dockerfile: images/local.Dockerfile
@@ -83,8 +85,10 @@ services:
       dockerfile: images/local.Dockerfile
     volumes:
       - ./frontend:/app
+    ports:
+      - 3000:3000
     depends_on:
-      - caddy
+      - server
       - master
       - database
     networks:

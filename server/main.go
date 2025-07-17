@@ -9,15 +9,21 @@ import (
 	models "github.com/milijan-mosic/net-look/server/models"
 )
 
-func main() {
+var url = "/api/1.0"
+
+func initDatabase() {
 	db := database.OpenDBConnection("./server.db")
 	database.MigrateModels(db, models.AllModels)
 	database.SeedDatabase(db)
 	database.CloseDBConnection(db, false)
+}
 
-	http.HandleFunc("/", controllers.ServeClient)
-	http.HandleFunc("/receive", controllers.ReceiveMetrics)
-	http.HandleFunc("/test", controllers.Test)
+func main() {
+	initDatabase()
 
-	log.Fatal(http.ListenAndServe(":11000", http.DefaultServeMux))
+	http.HandleFunc(url+"/", controllers.ServeClient)
+	http.HandleFunc(url+"/receive", controllers.ReceiveMetrics)
+	http.HandleFunc(url+"/test", controllers.Test)
+
+	log.Fatal(http.ListenAndServe(":10000", http.DefaultServeMux))
 }
