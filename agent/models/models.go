@@ -19,7 +19,7 @@ type SSD struct {
 
 type TimeStamp struct {
 	Date      string `json:"date"`      // local date
-	Timestamp string `json:"timestamp"` // UNIX
+	Timestamp int64  `json:"timestamp"` // UNIX
 }
 
 type Package struct {

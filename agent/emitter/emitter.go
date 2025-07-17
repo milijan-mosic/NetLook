@@ -3,7 +3,6 @@ package emitter
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
 	"log"
 	"net/http"
 
@@ -39,6 +38,6 @@ func Emit(jsonData []byte, target string, debug bool) {
 	defer resp.Body.Close()
 
 	if debug {
-		fmt.Println("Package status: ", resp.Status)
+		log.Println("Package status: ", resp.Status)
 	}
 }

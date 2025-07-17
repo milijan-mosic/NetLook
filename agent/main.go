@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	"log"
 	"time"
 
 	emitter "github.com/milijan-mosic/net-look/agent/emitter"
@@ -15,7 +15,7 @@ import (
 var tick = 1 * time.Second
 
 func main() {
-	fmt.Println("Booting up...")
+	log.Println("Booting up...")
 
 	for {
 		cpuUsage := cpu.GetCPUsUsage()
@@ -32,7 +32,7 @@ func main() {
 		}
 
 		packagedData := emitter.PackJson(data)
-		emitter.Emit(packagedData, "http://master:10000/receive", false)
+		emitter.Emit(packagedData, "http://master:10000/api/1.0/receive", true)
 
 		time.Sleep(tick)
 	}

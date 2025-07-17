@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/google/uuid"
 	database "github.com/milijan-mosic/net-look/server/database"
 	models "github.com/milijan-mosic/net-look/server/models"
 )
@@ -24,20 +25,22 @@ func ReceiveMetrics(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	db := database.OpenDBConnection("./server.db")
+	url := database.GetDBUrl()
+	db := database.OpenDBConnection(url)
 	allAgents := database.FindRootAgent(db)
 	if len(allAgents) == 0 {
 		http.Error(w, "No agents found", http.StatusInternalServerError)
 		return
 	}
 
-	agentID := allAgents[0].ID.ID
+	agentID := allAgents[0].ID
 	date := data.Time.Date
 	timestamp := data.Time.Timestamp
 
 	var CPUDataForInsertion []models.CPU
 	for _, receivedCPUData := range data.Cpu {
 		newCPU := models.CPU{
+			ID:        uuid.New().String(),
 			AgentID:   agentID,
 			Number:    receivedCPUData.Number,
 			Usage:     receivedCPUData.Usage,
@@ -53,6 +56,7 @@ func ReceiveMetrics(w http.ResponseWriter, r *http.Request) {
 	}
 
 	newRAM := models.RAM{
+		ID:        uuid.New().String(),
 		AgentID:   agentID,
 		Usage:     data.Ram.Usage,
 		Used:      data.Ram.Used,
@@ -67,6 +71,7 @@ func ReceiveMetrics(w http.ResponseWriter, r *http.Request) {
 	}
 
 	newSSD := models.SSD{
+		ID:        uuid.New().String(),
 		AgentID:   agentID,
 		Usage:     data.Ssd.Usage,
 		Used:      data.Ssd.Used,
@@ -81,6 +86,7 @@ func ReceiveMetrics(w http.ResponseWriter, r *http.Request) {
 	}
 
 	database.CloseDBConnection(db, false)
+	log.Println("Received...")
 
 	response := map[string]string{"message": "Package received"}
 	jsonResponse, err := json.Marshal(response)

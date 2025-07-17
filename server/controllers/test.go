@@ -8,7 +8,8 @@ import (
 )
 
 func Test(w http.ResponseWriter, r *http.Request) {
-	db := database.OpenDBConnection("./server.db")
+	url := database.GetDBUrl()
+	db := database.OpenDBConnection(url)
 
 	var tables []struct {
 		Name string `gorm:"column:name"`

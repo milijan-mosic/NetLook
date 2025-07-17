@@ -4,7 +4,6 @@ import (
 	"time"
 
 	models "github.com/milijan-mosic/net-look/agent/models"
-	utils "github.com/milijan-mosic/net-look/agent/utils"
 )
 
 func GetTimeData() models.TimeStamp {
@@ -14,7 +13,7 @@ func GetTimeData() models.TimeStamp {
 
 	timeStamp := models.TimeStamp{
 		Date:      dateTime,
-		Timestamp: utils.Integer64ToString(unixTimestamp),
+		Timestamp: unixTimestamp,
 	}
 
 	return timeStamp

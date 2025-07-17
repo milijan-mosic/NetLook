@@ -1,53 +1,38 @@
 package models
 
-import (
-	"gorm.io/gorm"
-
-	"github.com/google/uuid"
-)
-
-type ID struct {
-	ID string `gorm:"type:string;primaryKey" json:"id"`
-}
-
-func (base *ID) BeforeCreate(tx *gorm.DB) (err error) {
-	base.ID = uuid.New().String()
-	return
-}
-
 type Agent struct {
-	ID
+	ID             string  `gorm:"type:string;primaryKey" json:"id"`
 	Name           string  `json:"name"`
 	UpdateInterval float64 `json:"update_interval"`
 }
 
 type CPU struct {
-	ID
+	ID        string `gorm:"type:string;primaryKey" json:"id"`
 	AgentID   string `gorm:"type:string;foreignKey:AgentID" json:"agent_id"`
 	Number    string `json:"number"`    // thread number
 	Usage     string `json:"usage"`     // percentage
 	Date      string `json:"date"`      // local date
-	Timestamp string `json:"timestamp"` // UNIX
+	Timestamp int64  `json:"timestamp"` // UNIX
 }
 
 type RAM struct {
-	ID
+	ID        string `gorm:"type:string;primaryKey" json:"id"`
 	AgentID   string `gorm:"type:string;foreignKey:AgentID" json:"agent_id"`
 	Total     string `json:"total"`     // GB
 	Used      string `json:"used"`      // GB
 	Usage     string `json:"usage"`     // percentage
 	Date      string `json:"date"`      // local date
-	Timestamp string `json:"timestamp"` // UNIX
+	Timestamp int64  `json:"timestamp"` // UNIX
 }
 
 type SSD struct {
-	ID
+	ID        string `gorm:"type:string;primaryKey" json:"id"`
 	AgentID   string `gorm:"type:string;foreignKey:AgentID" json:"agent_id"`
 	Total     string `json:"total"`     // GB
 	Used      string `json:"used"`      // GB
 	Usage     string `json:"usage"`     // percentage
 	Date      string `json:"date"`      // local date
-	Timestamp string `json:"timestamp"` // UNIX
+	Timestamp int64  `json:"timestamp"` // UNIX
 }
 
 type AgentData struct {
@@ -72,7 +57,7 @@ var AllModels = []interface{}{
 
 type TimeStamp struct {
 	Date      string `json:"date"`      // local date
-	Timestamp string `json:"timestamp"` // UNIX
+	Timestamp int64  `json:"timestamp"` // UNIX
 }
 
 type Package struct {

@@ -11,7 +11,8 @@ import (
 )
 
 func ServeClient(w http.ResponseWriter, r *http.Request) {
-	db := database.OpenDBConnection("./server.db")
+	url := database.GetDBUrl()
+	db := database.OpenDBConnection(url)
 
 	allAgents := database.FindRootAgent(db)
 	if len(allAgents) == 0 {
@@ -29,19 +30,19 @@ func ServeClient(w http.ResponseWriter, r *http.Request) {
 		agentData.AgentName = agent.Name
 
 		var cpuData []models.CPU
-		if err := db.Where("agent_id = ? AND timestamp >= ?", agent.ID.ID, time30SecondsAgo).Find(&cpuData).Error; err != nil {
+		if err := db.Where("agent_id = ? AND timestamp >= ?", agent.ID, time30SecondsAgo).Find(&cpuData).Error; err != nil {
 			log.Println("Failed to query: ", err)
 		}
 		agentData.CPUs = append(agentData.CPUs, cpuData...)
 
 		var ramData []models.RAM
-		if err := db.Where("agent_id = ? AND timestamp >= ?", agent.ID.ID, time30SecondsAgo).Find(&ramData).Error; err != nil {
+		if err := db.Where("agent_id = ? AND timestamp >= ?", agent.ID, time30SecondsAgo).Find(&ramData).Error; err != nil {
 			log.Println("Failed to query: ", err)
 		}
 		agentData.RAM = append(agentData.RAM, ramData...)
 
 		var ssdData []models.SSD
-		if err := db.Where("agent_id = ? AND timestamp >= ?", agent.ID.ID, time30SecondsAgo).Find(&ssdData).Error; err != nil {
+		if err := db.Where("agent_id = ? AND timestamp >= ?", agent.ID, time30SecondsAgo).Find(&ssdData).Error; err != nil {
 			log.Println("Failed to query: ", err)
 		}
 		agentData.SSD = append(agentData.SSD, ssdData...)
