@@ -55,9 +55,9 @@ function Homepage() {
   return (
     <div className="flex flex-col bg-black text-white">
       <div className="flex flex-col justify-center items-center">
-        <h1 className="text-3xl font-bold mb-32">NetLook B)</h1>
+        <h1 className="text-3xl font-bold my-8">NetLook B)</h1>
 
-        <div className="w-full p-6 space-y-6">
+        <div className="w-full p-4 space-y-6">
           <CPUChart data={cpuData} />
           <RAMChart data={ramData} />
           <SSDChart data={ssdData} />
