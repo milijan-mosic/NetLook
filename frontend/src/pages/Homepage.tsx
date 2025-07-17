@@ -53,7 +53,7 @@ function Homepage() {
   }, []);
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col bg-black text-white">
       <div className="flex flex-col justify-center items-center">
         <h1 className="text-3xl font-bold mb-32">NetLook B)</h1>
 
@@ -61,7 +61,6 @@ function Homepage() {
           <CPUChart data={cpuData} />
           <RAMChart data={ramData} />
           <SSDChart data={ssdData} />
-          {/* <NetworkChart data={networkData} /> */}
         </div>
       </div>
     </div>

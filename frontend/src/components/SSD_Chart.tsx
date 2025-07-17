@@ -13,7 +13,7 @@ import { type ChartData } from "../types";
 
 export const SSDChart: React.FC<ChartData> = ({ data }) => {
   return (
-    <div className="p-4 bg-white rounded-2xl shadow-md">
+    <div className="p-4 rounded-2xl shadow-md">
       <h2 className="text-xl font-semibold mb-4">SSD Usage</h2>
       <ResponsiveContainer width="100%" height={300}>
         <LineChart data={data}>
