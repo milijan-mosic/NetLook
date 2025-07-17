@@ -1,10 +1,13 @@
-- SolidJS
+- React
 - TypeScript
 - TailwindCSS
-- ChartsJS
+- ChartsJS / D3.js
 - Axios
 
+---
+
 - Go
-- InfluxDB
-- SQLite
+- PostgreSQL
+- Kafka
 - Docker
+- WebSocket
